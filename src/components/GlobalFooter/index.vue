@@ -1,12 +1,18 @@
+<!--
+ * @Description: 更改footer
+ * @Version: 0.01
+ * @Autor: MoXu
+ * @Date: 2021-01-21 15:53:34
+ * @LastEditors: MoXu
+ * @LastEditTime: 2021-01-21 16:41:02
+-->
 <template>
   <global-footer class="footer custom-render">
     <template v-slot:links>
-      <a href="https://www.github.com/vueComponent/pro-layout" target="_blank">Pro Layout</a>
-      <a href="https://www.github.com/vueComponent/ant-design-vue-pro" target="_blank">Github</a>
-      <a href="https://www.github.com/sendya/" target="_blank">@Sendya</a>
+      <a href="http://www.mycos.com.cn/" target="_blank">MyCos  高等教育·人力资源</a>
     </template>
     <template v-slot:copyright>
-      <a href="https://github.com/vueComponent" target="_blank">vueComponent</a>
+      <p>Copyright © 2021 麦可思</p>
     </template>
   </global-footer>
 </template>
