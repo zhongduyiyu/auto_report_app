@@ -9,13 +9,13 @@
         <div class="top">
           <div class="header">
             <a href="/">
-              <img src="~@/assets/logo.svg" class="logo" alt="logo">
-              <span class="title">Ant Design</span>
+              <!-- <img src="~@/assets/logo.svg" class="logo" alt="logo"> -->
+              <span class="title">报告自动化平台</span>
             </a>
           </div>
-          <div class="desc">
+          <!-- <div class="desc">
             {{ $t('layouts.userLayout.title') }}
-          </div>
+          </div> -->
         </div>
 
         <router-view />
@@ -27,7 +27,7 @@
             <a href="_self">条款</a>
           </div>
           <div class="copyright">
-            Copyright &copy; 2018 vueComponent
+            Copyright &copy; 2021 麦可思
           </div>
         </div>
       </div>
@@ -98,6 +98,7 @@ export default {
 
       .top {
         text-align: center;
+        margin-bottom:30px;
 
         .header {
           height: 44px;

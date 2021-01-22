@@ -1,13 +1,4 @@
-<!--
- * @Description: 
- * @Version: 0.01
- * @Autor: MoXu
- * @Date: 2021-01-21 15:53:34
- * @LastEditors: MoXu
- * @LastEditTime: 2021-01-22 17:31:13
--->
 <template>
-
   <a-result
     :isSuccess="true"
     :content="false"

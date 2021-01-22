@@ -1,7 +1,15 @@
+/*
+ * @Description: 1
+ * @Version: 0.01
+ * @Autor: MoXu
+ * @Date: 2021-01-21 15:53:34
+ * @LastEditors: MoXu
+ * @LastEditTime: 2021-01-22 14:29:42
+ */
 export default {
     'menu.welcome': '欢迎',
     'menu.home': '主页',
-    'menu.dashboard': '仪表盘',
+    'menu.dashboard': '首页',
     'menu.dashboard.analysis': '分析页',
     'menu.dashboard.monitor': '监控页',
     'menu.dashboard.workplace': '工作台',
