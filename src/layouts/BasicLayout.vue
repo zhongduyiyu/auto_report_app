@@ -25,7 +25,7 @@
     <template v-slot:headerContentRender>
       <div>
         <a-tooltip title="刷新页面">
-          <a-icon type="reload" style="font-size: 18px;cursor: pointer;" @click="() => { $message.info('只是一个DEMO') }" />
+          <a-icon type="reload" style="font-size: 18px;cursor: pointer;" @click="handleReload" />
         </a-tooltip>
       </div>
     </template>
@@ -48,6 +48,7 @@
 
 <script>
 import { SettingDrawer, updateTheme } from '@ant-design-vue/pro-layout'
+import message from 'ant-design-vue/es/message'
 import { i18nRender } from '@/locales'
 import { mapState } from 'vuex'
 import { CONTENT_WIDTH_TYPE, SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mutation-types'
@@ -55,7 +56,6 @@ import { CONTENT_WIDTH_TYPE, SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mu
 import defaultSettings from '@/config/defaultSettings'
 import RightContent from '@/components/GlobalHeader/RightContent'
 import GlobalFooter from '@/components/GlobalFooter'
-import Ads from '@/components/Other/CarbonAds'
 import LogoSvg from '../assets/logo.svg?inline'
 export default {
   name: 'BasicLayout',
@@ -64,7 +64,6 @@ export default {
     RightContent,
     GlobalFooter,
     LogoSvg,
-    Ads
   },
   data () {
     return {
@@ -100,12 +99,6 @@ export default {
       isMobile: false
     }
   },
-  computed: {
-    ...mapState({
-      // 动态主路由
-      mainMenu: state => state.permission.addRouters
-    })
-  },
   created () {
     const routes = this.mainMenu.find(item => item.path === '/')
     this.menus = (routes && routes.children) || []
@@ -115,6 +108,12 @@ export default {
     })
     this.$watch('isMobile', () => {
       this.$store.commit(TOGGLE_MOBILE_TYPE, this.isMobile)
+    })
+  },
+  computed: {
+    ...mapState({
+      // 动态主路由
+      mainMenu: state => state.permission.addRouters
     })
   },
   mounted () {
@@ -148,6 +147,12 @@ export default {
         this.settings.contentWidth = CONTENT_WIDTH_TYPE.Fluid
         // this.settings.fixSiderbar = false
       }
+    },
+    //跳转到空白组件再跳回来实现组件的完全刷新
+    handleReload() {
+      let fromPath = this.$route.fullPath
+      this.$router.replace({path:'/reload',query:{path:fromPath}})
+      message.loading('刷新中...', 1)
     },
     handleCollapse (val) {
       this.collapsed = val

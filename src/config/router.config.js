@@ -13,38 +13,47 @@ export const asyncRouterMap = [
     name: 'index',
     component: BasicLayout,
     meta: { title: 'menu.home' },
-    redirect: '/dashboard/workplace',
+    redirect: '/dashboard',
     children: [
       // dashboard
       {
         path: '/dashboard',
         name: 'dashboard',
-        redirect: '/dashboard/workplace',
+        component: () => import('@/views/dashboard/Workplace'),
+        meta: { title: 'menu.dashboard', keepAlive: true, icon: "home", permission: ['dashboard'] },
+      },
+     
+      //checkData
+      {
+        path: '/checkData/list',
         component: RouteView,
-        meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: ['dashboard'] },
-        children: [
+        redirect: '/checkData/list',
+        name: 'checkData',
+        meta: { title: 'menu.account.checkData', icon: 'file-search', keepAlive: true, permission: ['user'] },
+        hideChildrenInMenu: true,
+        children:[
           {
-            path: '/dashboard/workplace',
-            name: 'Workplace',
-            component: () => import('@/views/dashboard/Workplace'),
-            meta: { title: 'menu.dashboard.workplace', keepAlive: true, permission: ['dashboard'] }
-          }
+            path:"/checkData/list",
+            name:"checkDataList",
+            component:()=>import('@/views/checkData/checkDataList'),
+            },
+            {
+            path:"/checkData/detail",
+            name:"checkDataDetail",
+            component:()=>import('@/views/checkData/checkDataDetail')
+            },
         ]
       },
-      // account
-      {
+
+      
+       // account
+       {
         path: '/account',
         component: RouteView,
         redirect: '/account/center',
         name: 'account',
         meta: { title: 'menu.account', icon: 'user', keepAlive: true, permission: ['user'] },
         children: [
-          {
-            path: '/account/center',
-            name: 'center',
-            component: () => import('@/views/account/center'),
-            meta: { title: 'menu.account.center', keepAlive: true, permission: ['user'] }
-          },
           {
             path: '/account/settings',
             name: 'settings',
@@ -143,5 +152,10 @@ export const constantRouterMap = [
   {
     path: '/404',
     component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404')
+  },
+
+  {
+    path:'/reload',
+    component: () => import(/* webpackChunkName: "fail" */ '@/components/Reload/Reload')
   }
 ]

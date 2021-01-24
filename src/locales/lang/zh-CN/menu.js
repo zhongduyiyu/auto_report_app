@@ -4,7 +4,7 @@
  * @Autor: MoXu
  * @Date: 2021-01-21 15:53:34
  * @LastEditors: MoXu
- * @LastEditTime: 2021-01-22 14:29:42
+ * @LastEditTime: 2021-01-23 01:15:58
  */
 export default {
     'menu.welcome': '欢迎',
@@ -43,5 +43,6 @@ export default {
     'menu.account.center': '个人中心',
     'menu.account.settings': '个人设置',
     'menu.account.trigger': '触发报错',
-    'menu.account.logout': '退出登录'
+    'menu.account.logout': '退出登录',
+    'menu.account.checkData': '数据检查',
 }

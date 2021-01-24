@@ -1,3 +1,11 @@
+<!--
+ * @Description: 
+ * @Version: 0.01
+ * @Autor: MoXu
+ * @Date: 2021-01-23 00:07:55
+ * @LastEditors: MoXu
+ * @LastEditTime: 2021-01-24 21:45:02
+-->
 <template>
   <div :class="wrpCls">
     <avatar-dropdown :menu="showMenu" :current-user="currentUser" :class="prefixCls" />
@@ -50,7 +58,8 @@ export default {
   mounted () {
     setTimeout(() => {
       this.currentUser = {
-        name: 'Serati Ma'
+        name: '测试用户',
+        role:'管理员'
       }
     }, 1500)
   }

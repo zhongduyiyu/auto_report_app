@@ -1,15 +1,20 @@
+<!--
+ * @Description: 
+ * @Version: 0.01
+ * @Autor: MoXu
+ * @Date: 2021-01-23 00:07:55
+ * @LastEditors: MoXu
+ * @LastEditTime: 2021-01-24 22:20:00
+-->
 <template>
-  <a-dropdown v-if="currentUser && currentUser.name" placement="bottomRight">
+  <a-dropdown v-if="currentUser && currentUser.name" placement="bottomLeft">
     <span class="ant-pro-account-avatar">
-      <a-avatar size="small" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" class="antd-pro-global-header-index-avatar" />
+      <!-- <a-avatar size="small" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" class="antd-pro-global-header-index-avatar" /> -->
+      <span>{{ currentUser.role }} </span>
       <span>{{ currentUser.name }}</span>
     </span>
     <template v-slot:overlay>
       <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
-        <a-menu-item v-if="menu" key="center" @click="handleToCenter">
-          <a-icon type="user" />
-          {{ $t('menu.account.center') }}
-        </a-menu-item>
         <a-menu-item v-if="menu" key="settings" @click="handleToSettings">
           <a-icon type="setting" />
           {{ $t('menu.account.settings') }}
@@ -43,9 +48,6 @@ export default {
     }
   },
   methods: {
-    handleToCenter () {
-      this.$router.push({ path: '/account/center' })
-    },
     handleToSettings () {
       this.$router.push({ path: '/account/settings' })
     },

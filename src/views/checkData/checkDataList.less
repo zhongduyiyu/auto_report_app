@@ -1,0 +1,44 @@
+.checkDataList{
+    height: 100%;
+    width: 100%;
+    .listHeader{
+        padding: 15px 0;
+        margin:0 15px 15px;
+        border-bottom: 1px solid #c1c1c1 ;
+        .projectTypeList{
+            margin:0 25px;
+            user-select: none;
+            &:hover{
+                cursor: pointer;
+                color:#1890ff;
+                font-weight: bold;
+            }
+        }
+        .active{
+            color:#1890ff;
+            font-weight: bold;
+        }
+    }
+    .filter{
+        display: flex;
+        justify-content: space-between;
+        margin:0 15px 15px;
+        .left{
+            display: flex;
+            .schoolName{
+                margin-left:10px;
+            }
+        }
+        .right{
+            display: flex;
+            .reload{
+                margin-right:10px;
+            }
+        }
+    }
+    .table{
+        a{
+            margin-left:10px;
+        }
+    }
+}

@@ -1,3 +1,19 @@
+<!--
+ * @Description: 
+ * @Version: 0.01
+ * @Autor: MoXu
+ * @Date: 2021-01-23 01:00:04
+ * @LastEditors: MoXu
+ * @LastEditTime: 2021-01-23 01:00:04
+-->
+<!--
+ * @Description: 
+ * @Version: 0.01
+ * @Autor: MoXu
+ * @Date: 2021-01-23 00:59:32
+ * @LastEditors: MoXu
+ * @LastEditTime: 2021-01-23 00:59:32
+-->
 <template>
   <a-list
     itemLayout="horizontal"

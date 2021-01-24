@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @Version: 0.01
+ * @Autor: MoXu
+ * @Date: 2021-01-23 00:07:56
+ * @LastEditors: MoXu
+ * @LastEditTime: 2021-01-23 00:51:26
+ */
 import antd from 'ant-design-vue/es/locale-provider/zh_CN'
 import momentCN from 'moment/locale/zh-cn'
 import global from './zh-CN/global'
@@ -21,7 +29,7 @@ export default {
 
   'layouts.usermenu.dialog.title': '信息',
   'layouts.usermenu.dialog.content': '您确定要注销吗？',
-  'layouts.userLayout.title': 'Ant Design 是西湖区最具影响力的 Web 设计规范',
+  'layouts.userLayout.title': 'The Automation Report By MyCOS',
   ...components,
   ...global,
   ...menu,
