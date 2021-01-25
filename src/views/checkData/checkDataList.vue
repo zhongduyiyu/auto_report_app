@@ -4,7 +4,7 @@
  * @Autor: MoXu
  * @Date: 2020-12-21 15:05:31
  * @LastEditors: MoXu
- * @LastEditTime: 2021-01-24 00:47:32
+ * @LastEditTime: 2021-01-25 18:48:31
 -->
 <template>
     <a-card :bordered="false" :bodyStyle="{ padding: '16px 0', height: '100%' }" :style="{ height: '100%' }">
@@ -59,7 +59,7 @@
             >
                 <span slot="action" slot-scope="text, record"
                 >
-                    <a @click="handlePush(record.id)">详情</a>
+                    <!-- <a @click="handlePush(record.id)">详情</a>
 
                     <a 
                     @click="handleTaskAssign"
@@ -72,52 +72,69 @@
                     
                     <a
                     v-if="record.projectStatus=='已分配'||record.projectStatus=='已检查'"
-                    @click="handleGivePermissionAgain">再次赋权</a>
+                    @click="handleGivePermissionAgain">再次赋权</a> -->
                     <a 
                     @click="handleDownload(record)"
                     >下载</a>
+                    <a 
+                    @click="handleUpload(record)"
+                    >导入</a>
                 </span>
             </a-table>
             
-        <a-modal 
-        v-model="showModal" 
-        :title="modalInfo.title"
-        ok-text="确认" cancel-text="取消"
-        >
-             <a-tree-select
-                v-if="modalInfo.id == 'taskAssign'"
-                show-search
-                style="width: 100%"
-                :value="treeValue"
-                :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-                placeholder="请选择分配对象"
-                allow-clear
-                multiple
-                @change="handleTreeChange"
+            <a-modal 
+            v-model="showModal" 
+            :title="modalInfo.title"
+            ok-text="确认" cancel-text="取消"
+            @ok="handleOk"
+            @cancel="handleCancel"
+            v-if="modalInfo.id == 'MultipleFileDownload'"
             >
-                <a-tree-select-node 
-                v-for="fatherItem in userList"
-                :key="fatherItem.category" :value="fatherItem.category" :title="fatherItem.category">
-
-                     <a-tree-select-node 
-                     v-for="sonItem in fatherItem.list"
-                    :key="sonItem.category" :value="sonItem.category" :title="sonItem.category">
+                <!-- <a-tree-select
+                    v-if="modalInfo.id == 'taskAssign'"
+                    show-search
+                    style="width: 100%"
+                    :value="treeValue"
+                    :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+                    placeholder="请选择分配对象"
+                    allow-clear
+                    multiple
+                    @change="handleTreeChange"
+                >
+                    <a-tree-select-node 
+                    v-for="fatherItem in userList"
+                    :key="fatherItem.category" :value="fatherItem.category" :title="fatherItem.category">
 
                         <a-tree-select-node 
-                         v-for="grandSon in sonItem.list"
-                         :key="grandSon.userName" :value="grandSon.userName" :title="grandSon.userName">
+                        v-for="sonItem in fatherItem.list"
+                        :key="sonItem.category" :value="sonItem.category" :title="sonItem.category">
+
+                            <a-tree-select-node 
+                            v-for="grandSon in sonItem.list"
+                            :key="grandSon.userName" :value="grandSon.userName" :title="grandSon.userName">
+                            </a-tree-select-node>
+
                         </a-tree-select-node>
 
                     </a-tree-select-node>
+                </a-tree-select> -->
+                <MultipleFileDownload 
+            :checkedKey="modalInfo.checkedKey"
+            :isDownload = "isDownload"
+                />
 
-                </a-tree-select-node>
-            </a-tree-select>
-            <MultipleFileDownload 
-           :checkedKey="modalInfo.checkedKey"
-            v-if="modalInfo.id == 'MultipleFileDownload'"
+            </a-modal>
+            <!-- 采用两个modal的原因是modal组件去掉下面按钮后，无法恢复原装胎 -->
+            <a-modal 
+            v-model="showModal" 
+            :title="modalInfo.title"
+            v-if="modalInfo.id == 'CommonUpload'"
+            :footer="null"
+            >
 
-            />
-        </a-modal>
+            <CommonUpload />
+            
+            </a-modal>
         </div>
 
     </div>
@@ -125,20 +142,24 @@
 </template>
 
 <script>
-import columnConfig from "@/systemConfig/dataTableConfig"
+import columnConfig from "@/config/dataTableConfig"
 import {projectType,defaultCheckedType} from "@/systemEnum/projectType"
 // import uiSelectWrapper from "@/components/UI/ui-select-wrapper"
 import MultipleFileDownload from "@/components/Download/MultipleFileDownload"
+import CommonUpload from "@/components/Upload/CommonUpload"
+
 //接口
-// import {getUserList} from "@/api/getUserList"
+import {getList} from "@/api/checkData"
     export default {
         components: {
             // 'ui-select-wrapper':uiSelectWrapper,
-            MultipleFileDownload
+            MultipleFileDownload,
+            CommonUpload
         },
  
         data(){
             return {
+                isDownload:false,//触发下载
                 treeValue:undefined,//树状控件已选分支的值
                 stopLoading:false,//赋值为true 暂停图标
                 push:false,//触发跳转
@@ -206,6 +227,11 @@ import MultipleFileDownload from "@/components/Download/MultipleFileDownload"
             }
         },
         methods:{
+            //文件上传处理
+            handleUpload(record){
+                this.isShowModal({id:"CommonUpload",title:"导入",checkedKey:record.id}) 
+                
+            },
             //文件下载处理
             handleDownload(record){
                this.isShowModal({id:"MultipleFileDownload",title:"多级下载",checkedKey:record.id}) 
@@ -227,25 +253,37 @@ import MultipleFileDownload from "@/components/Download/MultipleFileDownload"
             handlePush(id){
                  this.$router.push(`/checkData/detail?id=${id}`)
             },
-            async handleTaskAssign(){
-                this.isShowModal({id:"taskAssign",title:"分配任务"})
-                //获取用户列表
-                let res = await getUserList({})
-                this.userList = res.data.data 
-            },
-            handleMark(status,id){
-                if(status=="已检查"){
+            // async handleTaskAssign(){
+            //     this.isShowModal({id:"taskAssign",title:"分配任务"})
+            //     //获取用户列表
+            //     let res = await getList({})
+            //     console.log(res)
+            //     this.userList = res.data.data 
+            // },
+            // handleMark(status,id){
+            //     if(status=="已检查"){
 
-                }
-                //问题，标记未未检查后的状态是什么？
-                //发起请求，标记成功后，直接修改本地数据，并不需要重复请求完整数据
+            //     }
+            //     //问题，标记未未检查后的状态是什么？
+            //     //发起请求，标记成功后，直接修改本地数据，并不需要重复请求完整数据
+            // },
+            // handleGivePermissionAgain(){
+            //     this.isShowModal({id:"givePermissionAgain",title:"再次赋权"})
+            // },
+            // handleTaskAssignUserCheck(checkedValues){
+            //     console.log('checked = ', checkedValues);
+            // },
+            handleOk(e) {
+                console.log("ok")
+                this.isDownload = true
+                this.showModal = false 
+                setTimeout(()=>{
+                    this.isDownload = false
+                },50)
             },
-            handleGivePermissionAgain(){
-                this.isShowModal({id:"givePermissionAgain",title:"再次赋权"})
+            handleCancel(e) {
+                this.showModal = false 
             },
-            handleTaskAssignUserCheck(checkedValues){
-                console.log('checked = ', checkedValues);
-            }
 
         }
     }

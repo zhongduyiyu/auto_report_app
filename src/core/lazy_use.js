@@ -45,14 +45,14 @@ import {
   Descriptions,
   Space,
   message,
-  notification
+  notification,
+  Tree
 } from 'ant-design-vue'
 import Viser from 'viser-vue'
 
 // ext library
 import VueCropper from 'vue-cropper'
 import Dialog from '@/components/Dialog'
-import MultiTab from '@/components/MultiTab'
 import PageLoading from '@/components/PageLoading'
 import PermissionHelper from '@/core/permission/permission'
 import './directives/action'
@@ -99,6 +99,7 @@ Vue.use(Result)
 Vue.use(Statistic)
 Vue.use(Descriptions)
 Vue.use(Space)
+Vue.use(Tree)
 
 Vue.prototype.$confirm = Modal.confirm
 Vue.prototype.$message = message
@@ -110,7 +111,6 @@ Vue.prototype.$warning = Modal.warning
 
 Vue.use(Viser)
 Vue.use(Dialog) // this.$dialog func
-Vue.use(MultiTab)
 Vue.use(PageLoading)
 Vue.use(PermissionHelper)
 Vue.use(VueCropper)

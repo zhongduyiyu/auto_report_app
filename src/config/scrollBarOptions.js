@@ -2,17 +2,18 @@
  * @Description: 
  * @Version: 0.01
  * @Autor: MoXu
- * @Date: 2021-01-23 18:15:48
+ * @Date: 2021-01-25 10:47:12
  * @LastEditors: MoXu
- * @LastEditTime: 2021-01-23 18:15:48
+ * @LastEditTime: 2021-01-25 10:47:13
  */
+
 /*
  * @Description: 滚动条配置
  * @Version: 0.01
  * @Autor: MoXu
  * @Date: 2021-01-08 15:17:20
  * @LastEditors: MoXu
- * @LastEditTime: 2021-01-08 15:22:21
+ * @LastEditTime: 2021-01-25 10:44:56
  */
 const scrollBarOptions = {
     rail: {

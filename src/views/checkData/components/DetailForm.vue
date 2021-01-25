@@ -4,7 +4,7 @@
  * @Autor: MoXu
  * @Date: 2020-12-25 11:09:53
  * @LastEditors: MoXu
- * @LastEditTime: 2020-12-25 17:33:20
+ * @LastEditTime: 2021-01-25 10:35:49
 -->
 
 <template>
@@ -173,12 +173,41 @@ const data = [
 
 
     /deep/.tab{
-        background-color: #e8e8e8;
+        background-color: #fff;
         height: 100%;
     }
     /deep/.ant-tabs-top-bar{
-        border:0;
+        border-bottom:1px solid #e8e8e8;
     }
+
+    .card-container {
+  background: #f5f5f5;
+  overflow: hidden;
+  padding: 24px;
+}
+.card-container > .ant-tabs-card > .ant-tabs-content {
+  height: 120px;
+  margin-top: -16px;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
+  background: #fff;
+  padding: 16px;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar {
+  border-color: #fff;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
+  border-color: transparent;
+  background: transparent;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
+  border-color: #fff;
+  background: #fff;
+}
    
     
     

@@ -4,7 +4,7 @@
  * @Autor: MoXu
  * @Date: 2021-01-07 14:22:06
  * @LastEditors: MoXu
- * @LastEditTime: 2021-01-11 13:47:45
+ * @LastEditTime: 2021-01-25 17:14:43
 -->
 <template>
   <div>
@@ -44,7 +44,7 @@
 
 <script>
 //引入滚动条配置
-import scrollBarOptions from "@/systemConfig/scrollBarOptions.js";
+import scrollBarOptions from "@/config/scrollBarOptions.js";
 import { saveAs } from "file-saver";
 const treeData = [
   {
@@ -107,7 +107,7 @@ const treeData = [
   },
 ];
 export default {
-  props:["checkedKey"],
+  props:["checkedKey","isDownload"],
   data() {
     return {
       scrollBarOptions,//滚动条配置
@@ -123,6 +123,16 @@ export default {
   watch: {
     checkedKeys(val) {
       console.log("onCheck", val);
+    },
+    isDownload:function(val){
+     if(val){
+        //下载逻辑
+        var FileSaver = require("file-saver");
+        FileSaver.saveAs(
+        "https://nodejs.org/dist/v14.15.4/node-v14.15.4-x64.msi",
+        "nodejs.msi"
+      );
+     }
     },
     checkedKey(val){
       //判断是否为上一次触发该组件的同一列
@@ -151,13 +161,6 @@ export default {
     onSelect(selectedKeys, info) {
       console.log("onSelect", info);
       this.selectedKeys = selectedKeys;
-    },
-    handleDownload() {
-      var FileSaver = require("file-saver");
-      FileSaver.saveAs(
-        "https://nodejs.org/dist/v14.15.4/node-v14.15.4-x64.msi",
-        "nodejs.msi"
-      );
     },
     handleDel(val){
       this.checkedKeys.splice(this.checkedKeys.indexOf(val),1)

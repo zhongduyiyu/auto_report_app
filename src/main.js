@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @Version: 0.01
+ * @Autor: MoXu
+ * @Date: 2021-01-25 09:51:40
+ * @LastEditors: MoXu
+ * @LastEditTime: 2021-01-25 14:32:33
+ */
 // with polyfills
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
@@ -33,6 +41,12 @@ Vue.config.productionTip = false
 
 // mount axios to `Vue.$http` and `this.$http`
 Vue.use(VueAxios)
+// 滚动条
+import vuescroll from 'vuescroll';
+Vue.use(vuescroll, {
+  ops: {}, // 在这里设置全局默认配置
+});
+
 // use pro-layout components
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-container', PageHeaderWrapper)

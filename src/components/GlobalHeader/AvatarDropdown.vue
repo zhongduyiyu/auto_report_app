@@ -4,14 +4,14 @@
  * @Autor: MoXu
  * @Date: 2021-01-23 00:07:55
  * @LastEditors: MoXu
- * @LastEditTime: 2021-01-24 22:20:00
+ * @LastEditTime: 2021-01-25 10:05:21
 -->
 <template>
   <a-dropdown v-if="currentUser && currentUser.name" placement="bottomLeft">
     <span class="ant-pro-account-avatar">
       <!-- <a-avatar size="small" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" class="antd-pro-global-header-index-avatar" /> -->
-      <span>{{ currentUser.role }} </span>
-      <span>{{ currentUser.name }}</span>
+      <span class="role">{{ currentUser.role }} </span>
+      <span class="name">{{ currentUser.name }}</span>
     </span>
     <template v-slot:overlay>
       <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
@@ -71,6 +71,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+ .name{
+    color: #333;
+  }
 .ant-pro-drop-down {
   /deep/ .action {
     margin-right: 8px;

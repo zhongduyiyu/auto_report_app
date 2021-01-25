@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @Version: 0.01
+ * @Autor: MoXu
+ * @Date: 2021-01-21 15:53:34
+ * @LastEditors: MoXu
+ * @LastEditTime: 2021-01-25 13:40:11
+ */
 import { isIE } from '@/utils/util'
 
 // 判断环境不是 prod 或者 preview 是 true 时，加载 mock 服务
@@ -15,6 +23,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'tr
   require('./services/other')
   require('./services/tagCloud')
   require('./services/article')
+  require('./services/checkData')
 
   Mock.setup({
     timeout: 800 // setter delay time

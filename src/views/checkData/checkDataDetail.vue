@@ -4,7 +4,7 @@
  * @Autor: MoXu
  * @Date: 2020-12-24 15:44:48
  * @LastEditors: MoXu
- * @LastEditTime: 2021-01-24 21:15:48
+ * @LastEditTime: 2021-01-25 13:42:46
 -->
 <template>
     <a-card>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-// import{ getCheckDataDetail }from "@/api/getCheckDataDetail"
+import{ getDetail }from "@/api/checkData"
 import DetailForm from "./components/DetailForm"
     export default {
         data(){
@@ -68,9 +68,11 @@ import DetailForm from "./components/DetailForm"
             // 'ui-reload':uiReload,
             DetailForm,
         },
-        async created () {
-            let {data} = await getCheckDataDetail();
-            this.projectBasicInfo = data.data
+         created () {
+             getDetail().then(res => {
+             this.projectBasicInfo = res.result
+            })
+            
         },
     }
 </script>
