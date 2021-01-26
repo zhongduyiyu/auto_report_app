@@ -4,7 +4,7 @@
  * @Autor: MoXu
  * @Date: 2021-01-25 09:51:40
  * @LastEditors: MoXu
- * @LastEditTime: 2021-01-25 14:32:33
+ * @LastEditTime: 2021-01-26 18:49:15
  */
 // with polyfills
 import 'core-js/stable'
@@ -46,11 +46,18 @@ import vuescroll from 'vuescroll';
 Vue.use(vuescroll, {
   ops: {}, // 在这里设置全局默认配置
 });
-
+//注入vxe-table https://xuliangzhan_admin.gitee.io/vxe-table/v3/#/grid/api
+import 'xe-utils'
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/style.css'
+Vue.use(VXETable)
 // use pro-layout components
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-container', PageHeaderWrapper)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
+//拖动插件
+import draggable from 'vuedraggable'
+Vue.use(draggable)
 
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 

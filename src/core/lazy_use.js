@@ -46,10 +46,10 @@ import {
   Space,
   message,
   notification,
-  Tree
+  Tree,
+  FormModel
 } from 'ant-design-vue'
 import Viser from 'viser-vue'
-
 // ext library
 import VueCropper from 'vue-cropper'
 import Dialog from '@/components/Dialog'
@@ -100,6 +100,7 @@ Vue.use(Statistic)
 Vue.use(Descriptions)
 Vue.use(Space)
 Vue.use(Tree)
+Vue.use(FormModel)
 
 Vue.prototype.$confirm = Modal.confirm
 Vue.prototype.$message = message

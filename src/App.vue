@@ -4,7 +4,7 @@
  * @Autor: MoXu
  * @Date: 2021-01-23 00:07:55
  * @LastEditors: MoXu
- * @LastEditTime: 2021-01-24 01:20:59
+ * @LastEditTime: 2021-01-26 13:38:12
 -->
 <template>
   <a-config-provider :locale="locale">
@@ -31,3 +31,12 @@ export default {
   }
 }
 </script>
+
+<style lang="less">
+  .ant-pro-page-header-wrap-page-header-warp{
+    margin-bottom: 24px;
+  .ant-page-header-heading{
+    display: none;
+  }
+  }
+</style>

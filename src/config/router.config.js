@@ -37,17 +37,48 @@ export const asyncRouterMap = [
             name:"checkDataList",
             component:()=>import('@/views/checkData/checkDataList'),
             },
-            {
-            path:"/checkData/detail",
-            name:"checkDataDetail",
-            component:()=>import('@/views/checkData/checkDataDetail')
-            },
+            // {
+            // path:"/checkData/detail",
+            // name:"checkDataDetail",
+            // component:()=>import('@/views/checkData/checkDataDetail')
+            // },
+
         ]
       },
-
+ 
+      //reportprocessing
+      {
+        path: '/report',
+        component: RouteView,
+        name: 'reportProcessing',
+        redirect: '/report/list',
+        meta: { title: 'export.common-report.title', icon: 'audit', hidden: true, permission: ['user'] },
+        hideChildrenInMenu: true,
+        children:[
+          {
+          path: '/report/list',
+          name: 'reportList',
+          component: () => import('@/views/reportProcessing/reportList'),
+          meta: { title: 'export.common-report-list.title', hidden: true, permission: ['user'] },
+          },
+          {
+            path:'/report/basicEdit',
+            name:'reportBaiscedit',
+            component:()=>import('@/views/reportProcessing/reportBasicEdit'),
+            meta: { title: 'export.common-report-basic-edit.title',  hidden: true, permission: ['user'] },
+          },
+          {
+            path:'/report/edit',
+            name:'reportEdit',
+            component:()=>import('@/views/reportProcessing/reportEdit'),
+            meta: { title: 'export.common-report-edit.title',  hidden: true, permission: ['user'] },
+          },
+        ]
+      
+      },
       
        // account
-       {
+      {
         path: '/account',
         component: RouteView,
         redirect: '/account/center',
@@ -108,6 +139,7 @@ export const asyncRouterMap = [
       }
     ]
   },
+
   {
     path: '*',
     redirect: '/404',
