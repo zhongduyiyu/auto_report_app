@@ -4,7 +4,7 @@
  * @Autor: MoXu
  * @Date: 2021-01-26 13:42:51
  * @LastEditors: MoXu
- * @LastEditTime: 2021-01-27 19:14:49
+ * @LastEditTime: 2021-01-27 20:24:10
 -->
 <template>
     <div class="reportEdit">
@@ -117,6 +117,7 @@
                 //存储移动前和移动后的信息
                 moveStartArr:[],
                 moveEndArr:[],
+                confirmMoveArr:[]//移动成功的数据
             }
         },
         created () {
@@ -168,11 +169,11 @@
                 }
             },
             rowDrop () {
-            
+             //边界判断的思路主要是对比之前位置的rowId和现在移动那个对应位置的rowId长度是否一致
               this.$nextTick(() => {
                 const xTable = this.$refs.xTable1
                 //拖动插件初始化
-                
+                let element,nextElement
                 this.sortable1 = new Sortable(xTable.$el.querySelector('.body--wrapper>.vxe-table--body tbody'), {
                     handle: '.vxe-cell--label',
                     group: { name: "...", pull: [true], put: [true] },
@@ -186,7 +187,7 @@
                         expandTr.forEach((item,index)=>{
                             this.moveStartArr.push({rowId:item.attributes[0].value,index})
                         })
-                        console.log(this.moveStartArr)
+                       nextElement = expandTr[e.oldIndex+1]
                     },
                     onEnd: (e) => {
                         this.moveEndArr=[]
@@ -200,8 +201,27 @@
                         // console.log("当前rowId长度",this.moveEndArr[e.newIndex].rowId.length);
                         // console.log("旧的rowId长度",this.moveStartArr[e.oldIndex].rowId.length);
                         if(this.moveEndArr[e.newIndex].rowId.length!==this.moveStartArr[e.newIndex].rowId.length){
-                            console.log("跨级加载");
-                            expandTr[e.newIndex].parentNode.removeChild(expandTr[e.newIndex])
+                            // console.log("跨级加载");
+                            //需要删除的节点
+                            element =  expandTr[e.newIndex]
+                            // console.log(element);
+                            // //删除节点未改变位置前，后一位节点
+                            // console.log(nextElement);
+                            nextElement.parentNode.insertBefore( element,nextElement)
+                            // element.parentNode.removeChild(element)
+
+                            this.$notification.warning({
+                                message: '禁止跨级移动',
+                                description:
+                                '仅支持同级之间进行切换',
+                            });
+                        }else{
+                            //如果合规，则更改数据 
+                            expandTr = xTable.$el.querySelectorAll('.body--wrapper>.vxe-table--body tbody>tr')
+                            expandTr.forEach((item,index)=>{
+                            this.moveEndArr.push({rowId:item.attributes[0].value,index})
+                            })
+                            // dodo
                         }
 
                     // const currRow = this.tableData.splice(oldIndex, 1)[0]
