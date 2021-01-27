@@ -1,0 +1,9 @@
+[master af5f82b] '大纲配置=
+ 14 files changed, 700 insertions(+), 136 deletions(-)
+ rename src/config/{dataTableConfig.js => tableConfig.js} (53%)
+ create mode 100644 src/locales/lang/zh-CN/report.js
+ create mode 100644 src/locales/lang/zh-CN/report/commonReport.js
+ create mode 100644 src/views/reportProcessing/reportBasicEdit.vue
+ create mode 100644 src/views/reportProcessing/reportEdit.vue
+ create mode 100644 src/views/reportProcessing/reportList.less
+ create mode 100644 src/views/reportProcessing/reportList.vue

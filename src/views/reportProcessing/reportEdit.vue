@@ -4,7 +4,7 @@
  * @Autor: MoXu
  * @Date: 2021-01-26 13:42:51
  * @LastEditors: MoXu
- * @LastEditTime: 2021-01-26 18:33:42
+ * @LastEditTime: 2021-01-27 19:14:49
 -->
 <template>
     <div class="reportEdit">
@@ -45,28 +45,35 @@
             :style="{margin:'24px 0 0 24px',width:'100%',}"
             >
             <vxe-table
-            border
+            :show-header="false"
+            show-overflow
+            border="none"
             row-key
             ref="xTable1"
             class="sortable-row-demo"
             :scroll-y="{enabled: false}"
-            :data="tableData">
-                <vxe-table-column width="60">
-                    <template v-slot>
-                    <span class="drag-btn">
-                        <i class="vxe-icon--menu"></i>
-                    </span>
-                    </template>
-                    <template v-slot:header>
-                    <vxe-tooltip v-model="showHelpTip1" content="按住后可以上下拖动排序！" enterable>
-                        <i class="vxe-icon--question" @click="showHelpTip1 = !showHelpTip1"></i>
-                    </vxe-tooltip>
-                    </template>
+            :data="tableData"
+            :tree-config="{children: 'children'}"
+            :edit-config="{trigger: 'click', mode: 'row'}"
+            row-id="id"
+            keep-source
+            >
+               
+                <vxe-table-column 
+                field="name" 
+                width="auto" 
+                tree-node 
+                :edit-render="{name: 'input'}" 
+                />
+                <vxe-table-column  width="100" show-overflow>
+                    <template v-slot="{ row }">
+                        <a-button 
+                        icon="delete" 
+                        size="small"
+                        shape="circle"
+                        @click="handleDel(row)"></a-button>
+                    </template> 
                 </vxe-table-column>
-                <vxe-table-column field="name" title="Name"></vxe-table-column>
-                <vxe-table-column field="sex" title="Sex"></vxe-table-column>
-                <vxe-table-column field="age" title="Age"></vxe-table-column>
-                <vxe-table-column field="address" title="Address" show-overflow></vxe-table-column>
             </vxe-table>
             </a-card>
        </div>
@@ -74,22 +81,42 @@
 </template>
 
 <script>
+    //引入拖动插件
+    import Sortable from 'sortablejs/modular/sortable.complete.esm.js'
+
     export default {
         data(){
             return{
                 //vxe
                 showHelpTip1: false,
                 tableData: [
-                    { id: 10001, name: 'Test1', nickname: 'T1', role: 'Develop', sex: 'Man', age: 28, address: 'Shenzhen' },
-                    { id: 10002, name: 'Test2', nickname: 'T2', role: 'Test', sex: 'Women', age: 22, address: 'Guangzhou' },
-                    { id: 10003, name: 'Test3', nickname: 'T3', role: 'PM', sex: 'Man', age: 32, address: 'Shanghai' },
-                    { id: 10004, name: 'Test4', nickname: 'T4', role: 'Designer', sex: 'Women ', age: 23, address: 'Shenzhen' },
-                    { id: 10005, name: 'Test5', nickname: 'T5', role: 'Develop', sex: 'Women ', age: 30, address: 'Shanghai' }
+                    { 
+                        id: 10001, 
+                        name: 'Test1Test1Test1Test1Test1Test1Test1Test1Test1Test1',
+                        children: [
+                        { id: 100011, name: 'Test3' },
+                        { id: 100012, name: 
+                        'vxe-table 从入门到放弃4',
+                        children: [
+                        { id: 1000121, name: 'Test3' },
+                        { id: 1000122, name: 'vxe-table 从入门到放弃4' },
+                        ]
+                        },
+                        ]
+                    },
+                    { id: 10002, name: 'Test2Test1Test1Test1Test1Test1Test1Test1Test1Test1' },
+                    { id: 10003, name: 'Test3Test1Test1Test1Test1Test1Test1Test1Test1Test1' },
+                    { id: 10004, name: 'Test4Test1Test1Test1Test1Test1Test1Test1Test1Test1' },
+                    { id: 10005, name: 'Test5Test1Test1Test1Test1Test1Test1Test1Test1Test1' },
+                    
                 ],
                 //vxe
                 editFrame:true,
                 choose:false,
                 editItem:false,
+                //存储移动前和移动后的信息
+                moveStartArr:[],
+                moveEndArr:[],
             }
         },
         created () {
@@ -101,6 +128,28 @@
             }
         },
         methods: {
+            handleDel(row){            
+                function deepFilter(arr,key){
+                    //深度递归过滤
+                    if(!Array.isArray(arr)){return arr}
+                    
+                    arr.forEach((item,index)=>{
+                        if(item.id ===key){
+                            arr.splice(index,1)
+                        }else{
+                            if(Array.isArray(item.children)){
+                                deepFilter(item.children,key)
+                            }else{
+                                if(item.id===key){
+                                    arr.splice(index,1)
+                                }
+                            }
+                        }
+                       
+                    })
+                }
+                deepFilter(this.tableData,row.id) 
+            },
             handleProgressTool(val) {
                 if(val=="editFrame"){
                     this.editFrame = true
@@ -119,15 +168,47 @@
                 }
             },
             rowDrop () {
+            
               this.$nextTick(() => {
                 const xTable = this.$refs.xTable1
-                this.sortable1 = Sortable.create(xTable.$el.querySelector('.body--wrapper>.vxe-table--body tbody'), {
-                  handle: '.drag-btn',
-                  onEnd: ({ newIndex, oldIndex }) => {
-                    const currRow = this.tableData.splice(oldIndex, 1)[0]
-                    this.tableData.splice(newIndex, 0, currRow)
+                //拖动插件初始化
+                
+                this.sortable1 = new Sortable(xTable.$el.querySelector('.body--wrapper>.vxe-table--body tbody'), {
+                    handle: '.vxe-cell--label',
+                    group: { name: "...", pull: [true], put: [true] },
+                    // filter: `.vxe-body--row`,
+                    // swapThreshold: 1,
+                    sort: true,
+                    
+                    onStart:(e)=>{
+                        this.moveStartArr=[]
+                        let expandTr = xTable.$el.querySelectorAll('.body--wrapper>.vxe-table--body tbody>tr')
+                        expandTr.forEach((item,index)=>{
+                            this.moveStartArr.push({rowId:item.attributes[0].value,index})
+                        })
+                        console.log(this.moveStartArr)
+                    },
+                    onEnd: (e) => {
+                        this.moveEndArr=[]
+                        let expandTr = xTable.$el.querySelectorAll('.body--wrapper>.vxe-table--body tbody>tr')
+                        expandTr.forEach((item,index)=>{
+                            this.moveEndArr.push({rowId:item.attributes[0].value,index})
+                        })
+                        // console.log("当前数组",this.moveEndArr)
+                        // console.log("当前索引",e.newIndex,"旧索引",e.oldIndex);
+                        // console.log(this.moveEndArr[e.newIndex]);
+                        // console.log("当前rowId长度",this.moveEndArr[e.newIndex].rowId.length);
+                        // console.log("旧的rowId长度",this.moveStartArr[e.oldIndex].rowId.length);
+                        if(this.moveEndArr[e.newIndex].rowId.length!==this.moveStartArr[e.newIndex].rowId.length){
+                            console.log("跨级加载");
+                            expandTr[e.newIndex].parentNode.removeChild(expandTr[e.newIndex])
+                        }
+
+                    // const currRow = this.tableData.splice(oldIndex, 1)[0]
+                    // this.tableData.splice(newIndex, 0, currRow)
                   }
                 })
+
               })
             },
         }
@@ -170,12 +251,10 @@
     }
 }
 //vxe
-.sortable-row-demo .drag-btn {
-    cursor: move;
-    font-size: 12px;
-}
+
 .sortable-row-demo .vxe-body--row.sortable-ghost,
 .sortable-row-demo .vxe-body--row.sortable-chosen {
     background-color: #dfecfb;
+    
 }
 </style>

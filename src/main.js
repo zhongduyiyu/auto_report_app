@@ -4,7 +4,7 @@
  * @Autor: MoXu
  * @Date: 2021-01-25 09:51:40
  * @LastEditors: MoXu
- * @LastEditTime: 2021-01-26 18:49:15
+ * @LastEditTime: 2021-01-27 10:09:46
  */
 // with polyfills
 import 'core-js/stable'
@@ -55,10 +55,6 @@ Vue.use(VXETable)
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-container', PageHeaderWrapper)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
-//拖动插件
-import draggable from 'vuedraggable'
-Vue.use(draggable)
-
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 
 new Vue({
